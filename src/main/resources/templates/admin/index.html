@@ -1,155 +1,174 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="admin/fragments/head :: head">
-	</div>
+<div th:replace="admin/fragments/head :: head"></div>
 <title>Admin Dashboard</title>
 
-	
-
-
 <body class="hold-transition skin-blue sidebar-mini">
-	<!-- Site wrapper -->
-	<div class="wrapper">
-		<div th:replace="admin/fragments/header :: header"></div>
-		<!-- =============================================== -->
-		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
-		<!-- =============================================== -->
-		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-			<section class="content-header">
-				<h1>Thống kê kho</h1>
-				<ol class="breadcrumb">
-					<li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i>
-							Admin Home</a></li>
-					<li><a th:href="@{/admin}">Admin</a></li>
-					<li class="active">Thống kê kho</li>
-				</ol>
-			</section>
-			<!-- Main content -->
-			<section class="content">
-				<!-- Default box -->
-				<div class="box">
-					<div class="box-body">
-						<div class="row">
-							<div class="col-lg-4 col-xs-4">
-								<!-- small box -->
-								<div class="small-box bg-aqua">
-									<div class="inner">
-										<h3 th:text="${countProduct}">0</h3>
-										<p>Danh mục Kho hàng</p>
-									</div>
-									 <a th:href="@{/admin/category}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-									<div class="icon">
-										<i class="ion ion-bag"></i>
-									</div>
-								</div>
-							</div>
-							<!-- ./col -->
-							<div class="col-lg-4 col-xs-4">
-								<!-- small box -->
-								<div class="small-box bg-green">
-									<div class="inner">
-										<h3 th:text="${countCategory}">0</h3>
-										<p>Sản phẩm kho hàng</p>
-									</div>
-									 <a th:href="@{/admin/product}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-									<div class="icon">
-										<i class="ion ion-stats-bars"></i>
-									</div>
-								</div>
-							</div>
-							<!-- ./col -->
-							<div class="col-lg-4 col-xs-4">
-								<!-- small box -->
-								<div class="small-box bg-yellow">
-									<div class="inner">
-										<h3 th:text="${countUser}"></h3>
-										<p>Đăng ký người dùng</p>
-									</div>
-									 <a th:href="@{/admin/account/management}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-									<div class="icon">
-										<i class="ion ion-person-add"></i>
-									</div>
-								</div>
-							</div>
-							
-						
-						</div>
-						<!-- /.row -->
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <div th:replace="admin/fragments/header :: header"></div>
+        <!-- Sidebar -->
+        <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>Thống kê kho</h1>
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Admin Home</a></li>
+                    <li><a th:href="@{/admin}">Admin</a></li>
+                    <li class="active">Thống kê kho</li>
+                </ol>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <!-- Default box -->
+                <div class="box">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-xs-4">
+                                <!-- Small box for countProduct -->
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3 th:text="${countProduct}">0</h3>
+                                        <p>Sản phẩm</p>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xs-4">
+                                <!-- Small box for countCategory -->
+                                <div class="small-box bg-green">
+                                    <div class="inner">
+                                        <h3 th:text="${countCategory}">0</h3>
+                                        <p>Danh mục</p>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                    <div class="icon">
+                                        <i class="ion ion-stats-bars"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xs-4">
+                                <!-- Small box for countUser -->
+                                <div class="small-box bg-yellow">
+                                    <div class="inner">
+                                        <h3 th:text="${countUser}">0</h3>
+                                        <p>Người dùng</p>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                    <div class="icon">
+                                        <i class="ion ion-person-add"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.row -->
 
-						<!-- Charts -->
-						<div class="row">
-							<div class="col-lg-6 col-xs-12">
-								<canvas id="donutChart"></canvas>
-							</div>
-							<div class="col-lg-6 col-xs-12">
-								<canvas id="barChart"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-		<div th:replace="admin/fragments/footer :: footer"></div>
-	</div>
-	<div th:replace="admin/fragments/script :: script"></div>
+                        <!-- Charts -->
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <canvas id="barChart"></canvas>
+                            </div>
+                            <div class="col-lg-6">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
 
-	<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Data for Donut Chart
-            const donutData = {
-                labels: ['Products', 'Categories', 'Users'],
+        <div th:replace="admin/fragments/footer :: footer"></div>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- Scripts -->
+    <div th:replace="admin/fragments/script :: script"></div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script th:inline="javascript">
+        /* Chart Data */
+        var countProduct = /*[[${countProduct}]]*/ 0;
+        var countCategory = /*[[${countCategory}]]*/ 0;
+        var countUser = /*[[${countUser}]]*/ 0;
+
+        /* Bar Chart */
+        var ctxBar = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Sản phẩm', 'Danh mục', 'Người dùng'],
                 datasets: [{
-                    data: [/*[[${countProduct}]]*/, /*[[${countCategory}]]*/, /*[[${countUser}]]*/],
-                    backgroundColor: ['#f56954', '#00a65a', '#f39c12'],
+                    label: 'Số lượng',
+                    data: [countProduct, countCategory, countUser],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(255, 206, 86, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
                 }]
-            };
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
 
-            // Options for Donut Chart
-            const donutOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-            };
-
-            // Get context with jQuery - using jQuery's .get() method.
-            const donutCanvas = document.getElementById('donutChart').getContext('2d');
-            // This will get the first returned node in the jQuery collection.
-            new Chart(donutCanvas, {
-                type: 'doughnut',
-                data: donutData,
-                options: donutOptions,
-            });
-
-            // Data for Bar Chart
-            const barData = {
-                labels: ['Products', 'Categories', 'Users'],
+        /* Pie Chart */
+        var ctxPie = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: ['Sản phẩm', 'Danh mục', 'Người dùng'],
                 datasets: [{
-                    label: 'Count',
-                    backgroundColor: ['#f56954', '#00a65a', '#f39c12'],
-                    data: [/*[[${countProduct}]]*/, /*[[${countCategory}]]*/, /*[[${countUser}]]*/]
+                    label: 'Số lượng',
+                    data: [countProduct, countCategory, countUser],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(255, 206, 86, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
                 }]
-            };
-
-            // Options for Bar Chart
-            const barOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                datasetFill: false
-            };
-
-            // Get context with jQuery - using jQuery's .get() method.
-            const barCanvas = document.getElementById('barChart').getContext('2d');
-            // This will get the first returned node in the jQuery collection.
-            new Chart(barCanvas, {
-                type: 'bar',
-                data: barData,
-                options: barOptions,
-            });
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
         });
     </script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>
