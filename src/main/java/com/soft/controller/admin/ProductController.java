@@ -200,32 +200,36 @@ public class ProductController {
 		return "admin/product/edit";
 	}
 	
-	 @GetMapping("/detail-product/{id}")
-	    public String detail(Model model, @PathVariable("id") Integer id) {
-	        Product product = productService.findById(id);
-	        if (product == null) {
-	            model.addAttribute("error", "Product not found");
-	            return "redirect:/admin/product";
-	        }
-	        List<Category> listCate = categoryService.getAll();
-	        model.addAttribute("listCate", listCate);
-	        List<Suppliers> listSupp = supplierService.getAll();
-	        model.addAttribute("listSupp", listSupp);
-	        model.addAttribute("product", product);
-	        
-	       
-	        
-	        List<Inventory> inventories = inventoryService.findByProduct(product);
-	        model.addAttribute("inventories", inventories);
-
-	        // Lấy lịch sử Inventory cho từng Inventory và thêm vào model
-	        for (Inventory inventory : inventories) {
-	            List<InventoryHistory> history = inventoryService.getInventoryHistoryByInventoryId(inventory.getId());
-	            inventory.setHistory(history);
-	        }
-
-	        return "admin/product/detail";
+	@GetMapping("/detail-product/{id}")
+	public String detail(Model model, @PathVariable("id") Integer id) {
+	    Product product = productService.findById(id);
+	    if (product == null) {
+	        model.addAttribute("error", "Product not found");
+	        return "redirect:/admin/product";
 	    }
+	    List<Category> listCate = categoryService.getAll();
+	    model.addAttribute("listCate", listCate);
+	    List<Suppliers> listSupp = supplierService.getAll();
+	    model.addAttribute("listSupp", listSupp);
+	    
+	    // Tính toán tổng số lượng
+	    int totalQuantity = calculateTotalQuantity(product);
+	    product.setTotalQuantity(totalQuantity);
+
+	    model.addAttribute("product", product);
+
+	    List<Inventory> inventories = inventoryService.findByProduct(product);
+	    model.addAttribute("inventories", inventories);
+
+	    // Lấy lịch sử Inventory cho từng Inventory và thêm vào model
+	    for (Inventory inventory : inventories) {
+	        List<InventoryHistory> history = inventoryService.getInventoryHistoryByInventoryId(inventory.getId());
+	        inventory.setHistory(history);
+	    }
+
+	    return "admin/product/detail";
+	}
+
 
 
 	@PostMapping("/edit-product")
