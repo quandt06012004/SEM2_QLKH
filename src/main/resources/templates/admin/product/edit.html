@@ -20,9 +20,11 @@
 
             <section class="content">
                 <div class="box box-primary">
-                   <form role="form" method="post" th:action="@{/admin/product-add}"
+                   <form role="form" method="post" th:action="@{/admin/edit-product}"
       th:object="${product}" enctype="multipart/form-data">
     <div class="box-body">
+    <input type="hidden" class="form-control" id="id" placeholder="id"
+                   th:field="*{id}">
         <!-- Product Name -->
         <div class="form-group" th:classappend="${#fields.hasErrors('productName')} ? 'has-error' : ''">
             <label for="productName">Product Name :</label>
@@ -102,7 +104,7 @@
     </div>
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Update</button>
     </div>
 </form>
 
