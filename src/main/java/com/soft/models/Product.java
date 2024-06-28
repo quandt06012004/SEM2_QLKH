@@ -75,7 +75,7 @@ public class Product {
     @JoinColumn(name = "supplierId", referencedColumnName = "id")
     private Suppliers suppliers;
 
-    // New property for total quantity
+    
     @Transient
     private int totalQuantity;
 
