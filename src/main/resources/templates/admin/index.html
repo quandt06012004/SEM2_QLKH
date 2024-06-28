@@ -34,7 +34,7 @@
                                         <h3 th:text="${countProduct}">0</h3>
                                         <p>Sản phẩm</p>
                                     </div>
-                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a th:href="@{/admin/product}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                                     <div class="icon">
                                         <i class="ion ion-bag"></i>
                                     </div>
@@ -47,7 +47,7 @@
                                         <h3 th:text="${countCategory}">0</h3>
                                         <p>Danh mục</p>
                                     </div>
-                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a th:href="@{/admin/category}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                                     <div class="icon">
                                         <i class="ion ion-stats-bars"></i>
                                     </div>
@@ -60,7 +60,7 @@
                                         <h3 th:text="${countUser}">0</h3>
                                         <p>Người dùng</p>
                                     </div>
-                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a th:href="@{/admin/account/management}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                                     <div class="icon">
                                         <i class="ion ion-person-add"></i>
                                     </div>

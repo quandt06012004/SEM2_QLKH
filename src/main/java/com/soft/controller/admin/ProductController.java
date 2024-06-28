@@ -1,9 +1,17 @@
 package com.soft.controller.admin;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.http.HttpHeaders;
 import com.soft.models.Category;
 import com.soft.models.Inventory;
 import com.soft.models.InventoryHistory;
@@ -43,6 +51,61 @@ public class ProductController {
 	@Autowired
     private InventoryService inventoryService;
 	
+	@GetMapping("/export-products")
+	public ResponseEntity<byte[]> exportProductsToExcel() {
+	    List<Product> products = productService.getAll(); 
+
+	    
+	    long totalQuantity = products.stream().mapToLong(Product::getTotalQuantity).sum();
+
+	    try (Workbook workbook = new XSSFWorkbook()) {
+	        Sheet sheet = workbook.createSheet("Products");
+
+	        // Tiêu đề cột
+	        String[] headers = {"ID", "Product Name", "Price", "Category", "Supplier", "Quantity"};
+	        Row headerRow = sheet.createRow(0);
+	        for (int i = 0; i < headers.length; i++) {
+	            Cell cell = headerRow.createCell(i);
+	            cell.setCellValue(headers[i]);
+	        }
+
+	        // Dữ liệu sản phẩm
+	        int rowNum = 1;
+	        for (Product product : products) {
+	            Row row = sheet.createRow(rowNum++);
+	            row.createCell(0).setCellValue(product.getId());
+	            row.createCell(1).setCellValue(product.getProductName());
+	            row.createCell(2).setCellValue(product.getPrice());
+	            row.createCell(3).setCellValue(product.getCategory().getCategoryName());
+	            row.createCell(4).setCellValue(product.getSuppliers().getSupplierName());
+	            row.createCell(5).setCellValue(product.getTotalQuantity()); // Cột Quantity là cột thứ 5
+
+	            
+	            if (rowNum == products.size() + 1) {
+	                Row totalRow = sheet.createRow(rowNum);
+	                totalRow.createCell(4).setCellValue("Total Quantity:"); // Cột Category là cột thứ 4
+	                totalRow.createCell(5).setCellValue(totalQuantity); // Cột Quantity là cột thứ 5
+	            }
+	        }
+
+	        // xuất file Excel
+	        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	        workbook.write(outputStream);
+
+	        HttpHeaders headers1 = new HttpHeaders();
+	        headers1.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=products.xlsx");
+
+	        return ResponseEntity.ok()
+	                .headers(headers1)
+	                .body(outputStream.toByteArray());
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
+	    return ResponseEntity.badRequest().build();
+	}
+	
+	
 	@GetMapping("/product")
     public String index(Model model, @RequestParam(name = "keyword", defaultValue = "") String keyword,
                         @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
@@ -52,7 +115,7 @@ public class ProductController {
             list = this.productService.searchProduct(keyword, pageNo, 4);
         }
 
-        // Tính toán và đưa thông tin quantity vào listProduct
+        
         for (Product product : list) {
             int totalQuantity = calculateTotalQuantity(product);
             product.setTotalQuantity(totalQuantity);
@@ -66,7 +129,7 @@ public class ProductController {
         return "admin/product/index";
     }
 
-    // Phương thức tính tổng số lượng từ Inventory của một sản phẩm
+    
     private int calculateTotalQuantity(Product product) {
         int totalQuantity = 0;
         List<Inventory> inventories = inventoryService.findByProduct(product);
