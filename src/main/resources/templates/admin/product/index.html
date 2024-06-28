@@ -25,8 +25,8 @@
 			<section class="content-header">
 				<h1>Product Page</h1>
 				<ol class="breadcrumb">
-					<li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Admin
-							Home</a></li>
+					<li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i>
+							Admin Home</a></li>
 					<li><a th:href="@{/admin/product}">Product</a></li>
 					<li class="active">Product page</li>
 				</ol>
@@ -39,90 +39,92 @@
 					<div class="box-header with-border">
 						<div class="box-header with-border">
 
-						<div class=row>
-							<div class="col-md-10">
-								<form>
-									<div class="input-group input-group-sm hidden-xs"
-										style="width: 50%;">
+							<div class=row>
+								<div class="col-md-10">
+									<form>
+										<div class="input-group input-group-sm hidden-xs"
+											style="width: 50%;">
 
-										<input type="text" name="keyword"
-											class="form-control pull-right" placeholder="Search"
-											th:value="${keyword}">
-										<div class="input-group-btn">
-											<button type="submit" class="btn btn-default">
-												<i class="fa fa-search"></i>
-											</button>
+											<input type="text" name="keyword"
+												class="form-control pull-right" placeholder="Search"
+												th:value="${keyword}">
+											<div class="input-group-btn">
+												<button type="submit" class="btn btn-default">
+													<i class="fa fa-search"></i>
+												</button>
+											</div>
 										</div>
-									</div>
-						
+
+									</form>
+
+
+									<br />
+								</div>
+								<form th:action="@{/admin/export-products}" method="get">
+									<button type="submit" class="btn btn-success">Export
+										to Excel</button>
 								</form>
-								
-										
-								<br />
+
 							</div>
-							<form>
-								<button type="button" class="btn btn-success" onclick="exportToExcel()">Export to Excel</button>
-								</form>
-						</div>	
-					</div>
+						</div>
 
-					<div class="box-body">
+						<div class="box-body">
 							<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th>ID</th>
-									<th>Product Name</th>
-									<th>Price</th>
-									<th>Image</th>
-									<th>Category</th>
-									<th>Supplier</th>
-									<th>Quantity</th>
-									<th>Action</th>
+								<tbody>
+									<tr>
+										<th>ID</th>
+										<th>Product Name</th>
+										<th>Price</th>
+										<th>Image</th>
+										<th>Category</th>
+										<th>Supplier</th>
+										<th>Quantity</th>
+										<th>Action</th>
 
 
-								</tr>
+									</tr>
 
 
-								<tr th:each="product : ${listProduct}">
-									<td th:text="${product.id}"></td>
-									<td th:text="${product.productName}"></td>
-									<td th:text="${product.price}+'$'"></td>
-									<td>
-										<img th:src="@{'/uploads/'+${product.image}}" width=60px;>
-									</td>
-									<td th:text="${product.category.categoryName}"></td>
-									<td th:text="${product.suppliers.supplierName}"></td>
-									<td th:text="${product.totalQuantity}"></td>
-									<td>
-										<a
-										th:href="@{/admin/edit-product/{id}(id=${product.id})}"
-										class="btn btn-success">Edit</a> 
-										<a
-										th:href="@{/admin/detail-product/{id}(id=${product.id})}"
-										class="btn btn-primary">Detail</a> 
-										<a
-										th:href="@{/admin/delete-product/{id}(id=${product.id})}"
-										class="btn btn-danger"
-										onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này ?')">Delete</a>
-									</td>
-								</tr>
+									<tr th:each="product : ${listProduct}">
+										<td th:text="${product.id}"></td>
+										<td th:text="${product.productName}"></td>
+										<td th:text="${product.price}+'$'"></td>
+										<td><img th:src="@{'/uploads/'+${product.image}}"
+											width=60px;></td>
+										<td th:text="${product.category.categoryName}"></td>
+										<td th:text="${product.suppliers.supplierName}"></td>
+										<td th:text="${product.totalQuantity}"></td>
+										<td><a
+											th:href="@{/admin/edit-product/{id}(id=${product.id})}"
+											class="btn btn-success">Edit</a> <a
+											th:href="@{/admin/detail-product/{id}(id=${product.id})}"
+											class="btn btn-primary">Detail</a> <a
+											th:href="@{/admin/delete-product/{id}(id=${product.id})}"
+											class="btn btn-danger"
+											onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này ?')">Delete</a>
+										</td>
+									</tr>
 
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="box-footer clearfix">
+							<ul class="pagination pagination-sm no-margin pull-right">
+
+								<li th:if="${currentPage > 1}"><a
+									th:href="@{'/admin/product?pageNo='+${currentPage-1}}">«</a></li>
+
+								<li th:each="i:${#numbers.sequence(1,totalPage)}"
+									th:classappend="${currentPage == i ? 'active' : '' }"><a
+									th:href="@{'/admin/product?keyword='+${keyword}+'&pageNo='+${i}}"
+									th:text="${i}"></a></li>
+
+								<li th:if="${currentPage < totalPage}"><a
+									th:href="@{'/admin/product?pageNo='+${currentPage+1}}">»</a></li>
+							</ul>
+						</div>
 					</div>
-
-					<div class="box-footer clearfix">
-						<ul class="pagination pagination-sm no-margin pull-right">
-						
-							<li th:if="${currentPage > 1}"><a th:href="@{'/admin/product?pageNo='+${currentPage-1}}">«</a></li>
-
-							<li th:each="i:${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : '' }"><a th:href="@{'/admin/product?keyword='+${keyword}+'&pageNo='+${i}}" th:text="${i}"></a></li>
-
-							<li th:if="${currentPage < totalPage}"><a th:href="@{'/admin/product?pageNo='+${currentPage+1}}">»</a>
-							</li>
-						</ul>
-					</div>
-				</div>
 				</div>
 
 			</section>
