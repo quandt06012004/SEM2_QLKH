@@ -2,105 +2,121 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
 
 <head th:replace="admin/fragments/head :: head">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-	<div class="wrapper">
-		<div th:replace="admin/fragments/header :: header"></div>
-		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+    <div class="wrapper">
+        <div th:replace="admin/fragments/header :: header"></div>
+        <div th:replace="admin/fragments/sidebar :: sidebar"></div>
 
-		<div class="content-wrapper">
-			<section class="content-header">
-				<h2>Product Detail</h2>
-				<ol class="breadcrumb">
-					<li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i>
-							Admin Home</a></li>
-					<li><a th:href="@{/admin/product}">Product</a></li>
-					<li class="active">Product Detail Page</li>
-				</ol>
-			</section>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h2>Product Detail</h2>
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Admin Home</a></li>
+                    <li><a th:href="@{/admin/product}">Product</a></li>
+                    <li class="active">Product Detail Page</li>
+                </ol>
+            </section>
 
-			<section class="content product-detail">
-				<div class="card">
-					<div class="card-header">
-						<p>
-							Product Information for Id : <span th:text="${product.id}"></span>
-						</p>
-					</div>
-					<div class="card-body">
-						<!-- Product Image -->
-						<div class="row">
-							<div class="col-md-3 offset-md-3">
-								<img th:src="@{'/uploads/'+${product.image}}"
-									alt="Product Image" class="float-right">
-							</div>
-							<br />
-							<div class="col-md-9">
-								<!-- Product Name -->
-								<div class="form-group">
-									Product Name : <span th:text="${product.productName}"></span>
-								</div>
+            <section class="content product-detail">
+                <div class="card">
+                    <div class="card-header">
+                        <p>
+                            Product Information for Id: <span th:text="${product.id}"></span>
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <!-- Product Image -->
+                        <div class="row">
+                            <div class="col-md-3 offset-md-3">
+                                <img th:src="@{'/uploads/'+${product.image}}" alt="Product Image" class="float-right">
+                            </div>
+                            <br />
+                            <div class="col-md-9">
+                                <!-- Product Name -->
+                                <div class="form-group">
+                                    Product Name: <span th:text="${product.productName}"></span>
+                                </div>
 
-								<!-- Price -->
-								<div class="form-group">
-									Price : <span th:text="${product.price}"></span>
-								</div>
+                                <!-- Price -->
+                                <div class="form-group">
+                                    Price: <span th:text="${product.price}"></span>
+                                </div>
 
-								<!-- Sale Price -->
-								<div class="form-group">
-									Sale Price : <span th:text="${product.salePrice}"></span>
-								</div>
+                                <!-- Sale Price -->
+                                <div class="form-group">
+                                    Sale Price: <span th:text="${product.salePrice}"></span>
+                                </div>
 
-								<!-- Category -->
-								<div class="form-group">
-									Category : <span th:text="${product.category.categoryName}"></span>
-								</div>
+                                <!-- Category -->
+                                <div class="form-group">
+                                    Category: <span th:text="${product.category.categoryName}"></span>
+                                </div>
 
-								<!-- Supplier -->
-								<div class="form-group">
-									Supplier : <span th:text="${product.suppliers.supplierName}"></span>
-								</div>
+                                <!-- Supplier -->
+                                <div class="form-group">
+                                    Supplier: <span th:text="${product.suppliers.supplierName}"></span>
+                                </div>
 
-								<!-- Created At -->
-								<div class="form-group">
-									Created At : <span th:text="${product.createdAt}"></span>
-								</div>
+                                <!-- Created At -->
+                                <div class="form-group">
+                                    Created At: <span th:text="${product.createdAt}"></span>
+                                </div>
 
-								<!-- Gender -->
-								<div class="form-group">
-									Intended for : <span th:text="${product.genderForProduct}"></span>
-								</div>
-								<div class=form-group>
-									<a class="btn btn-primary" th:href="@{/admin/product}">Back</a>
-								</div>
+                                <!-- Gender -->
+                                <div class="form-group">
+                                    Intended for: <span th:text="${product.genderForProduct}"></span>
+                                </div>
+                                <div class="form-group">
+                                    <a class="btn btn-primary" th:href="@{/admin/product}">Back</a>
+                                </div>
+                            </div>
+                        </div>
 
-							</div>
+                        <br />
+                        <div class="form-group">
+                            Description:
+                            <div th:utext="${product.description}"></div>
+                        </div>
 
-						</div>
+                        <!-- Inventory History -->
+                        <div class="form-group">
+                            <h3>Inventory History</h3>
+                            <div th:each="inventory : ${inventories}">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Quantity</th>
+                                            <th>Date Updated</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="history : ${inventory.history}">
+                                            <td th:text="${history.id}"></td>
+                                            <td th:text="${history.quantity}"></td>
+                                            <td th:text="${#dates.format(history.dateUpdated, 'yyyy-MM-dd')}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-						<br />
-						<div class="form-group">
-							Description:
-							<div th:utext="${product.description}"></div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-		<div th:replace="admin/fragments/footer :: footer"></div>
-	</div>
+        <div th:replace="admin/fragments/footer :: footer"></div>
+    </div>
 
-	<div th:replace="admin/fragments/script :: script"></div>
-	<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div th:replace="admin/fragments/script :: script"></div>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

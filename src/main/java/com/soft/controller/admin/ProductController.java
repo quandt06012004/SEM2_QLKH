@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.soft.models.Category;
+import com.soft.models.Inventory;
+import com.soft.models.InventoryHistory;
 import com.soft.models.Product;
 import com.soft.models.Suppliers;
 import com.soft.service.CategoryService;
+import com.soft.service.InventoryService;
 import com.soft.service.ProductService;
 import com.soft.service.StorageService;
 import com.soft.service.SupplierService;
@@ -37,22 +40,41 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private SupplierService supplierService;
+	@Autowired
+    private InventoryService inventoryService;
 	
 	@GetMapping("/product")
-	
-	public String index(Model model, @RequestParam(name="keyword",defaultValue = "") String keyword,
-			@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
-		Page<Product> list = this.productService.getAll(pageNo, 4);
+    public String index(Model model, @RequestParam(name = "keyword", defaultValue = "") String keyword,
+                        @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+        Page<Product> list = this.productService.getAll(pageNo, 4);
 
-		if(keyword != null) {
-			list  = this.productService.searchProduct(keyword, pageNo, 4);	
-		}
-		model.addAttribute("totalPage", list.getTotalPages());
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("currentPage", pageNo);
-		model.addAttribute("listProduct", list);
-		return "admin/product/index";
-	}
+        if (keyword != null) {
+            list = this.productService.searchProduct(keyword, pageNo, 4);
+        }
+
+        // Tính toán và đưa thông tin quantity vào listProduct
+        for (Product product : list) {
+            int totalQuantity = calculateTotalQuantity(product);
+            product.setTotalQuantity(totalQuantity);
+        }
+
+        model.addAttribute("totalPage", list.getTotalPages());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listProduct", list);
+
+        return "admin/product/index";
+    }
+
+    // Phương thức tính tổng số lượng từ Inventory của một sản phẩm
+    private int calculateTotalQuantity(Product product) {
+        int totalQuantity = 0;
+        List<Inventory> inventories = inventoryService.findByProduct(product);
+        for (Inventory inventory : inventories) {
+            totalQuantity += inventory.getQuantity();
+        }
+        return totalQuantity;
+    }
 
 	@GetMapping("/product-add")
 	public String add(Model model) {
@@ -109,19 +131,31 @@ public class ProductController {
 		model.addAttribute("product", product);
 		return "admin/product/edit";
 	}
+	
 	 @GetMapping("/detail-product/{id}")
 	    public String detail(Model model, @PathVariable("id") Integer id) {
-	        Product product = this.productService.findById(id);
+	        Product product = productService.findById(id);
 	        if (product == null) {
 	            model.addAttribute("error", "Product not found");
 	            return "redirect:/admin/product";
 	        }
-	        List<Category> listCate = this.categoryService.getAll();
+	        List<Category> listCate = categoryService.getAll();
 	        model.addAttribute("listCate", listCate);
-	        List<Suppliers> listSupp = this.supplierService.getAll();
+	        List<Suppliers> listSupp = supplierService.getAll();
 	        model.addAttribute("listSupp", listSupp);
 	        model.addAttribute("product", product);
-	        return "admin/product/detail"; 
+
+	        
+	        List<Inventory> inventories = inventoryService.findByProduct(product);
+	        model.addAttribute("inventories", inventories);
+
+	        // Lấy lịch sử Inventory cho từng Inventory và thêm vào model
+	        for (Inventory inventory : inventories) {
+	            List<InventoryHistory> history = inventoryService.getInventoryHistoryByInventoryId(inventory.getId());
+	            inventory.setHistory(history);
+	        }
+
+	        return "admin/product/detail";
 	    }
 
 
