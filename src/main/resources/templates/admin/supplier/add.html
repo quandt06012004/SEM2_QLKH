@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Add</title>
+</head>
+<style>
+	.error{
+		color: red;
+	}
+</style>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<div th:replace="admin/fragments/head :: head"></div>
+
+		<div th:replace="admin/fragments/header :: header"></div>
+
+		<!-- =============================================== -->
+
+		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Product Add</h1>
+				<ol class="breadcrumb">
+					<li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Admin
+							Home</a></li>
+					<li><a th:href="@{/admin/product}">Product</a></li>
+					<li class="active">Product Add Page</li>
+				</ol>
+			</section>
+
+
+			<section class="content">
+
+				<div class="box box-primary">
+
+					<form role="form" method="post" th:action="@{/admin/supplier-add}"
+						th:object="${suppliers}" >
+						<div class="box-body">
+						
+							<div class="form-group">
+								<label for="ProductName">supplier Name :</label> <input
+									type="text" class="form-control" id="supplierName"
+									placeholder="Supplier Name" th:field="*{supplierName}">
+								 <span th:if="${#fields.hasErrors('supplierName')}" th:errors="*{supplierName}" class="error"></span>
+							</div>
+							<div class="form-group">
+
+                                    <label for="categoryStatus">Gender</label><br />
+                                    <label class="radio-inline">
+                                        <input type="radio"  value="1"
+                                            th:field="*{gender}">Name
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="0"
+                                            th:field="*{gender}">Nữ
+                                    </label>
+							</div>
+							<div class="form-group">
+								<label for="ProductName">phone :</label> <input
+									type="text" class="form-control" id="phone"
+									placeholder="phone" th:field="*{phone}">
+									<span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error"></span>
+							</div>
+							<div class="form-group">
+								<label for="ProductName">Email :</label> <input
+									type="text" class="form-control" id="email"
+									placeholder="email" th:field="*{email}">
+									 <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+							</div>
+							<div class="form-group">
+								<label for="ProductName">Address :</label> <input
+									type="text" class="form-control" id="address"
+									placeholder="address" th:field="*{address}">
+									 <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error"></span>
+							</div>
+						</div>
+
+						<div class="box-footer">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+				</div>
+
+			</section>
+
+		</div>
+
+		<div th:replace="admin/fragments/footer :: footer"></div>
+
+	</div>
+
+	
+	<div th:replace="admin/fragments/script :: script"></div>
+</body>
+</html>

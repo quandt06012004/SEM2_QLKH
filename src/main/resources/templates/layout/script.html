@@ -1,0 +1,67 @@
+ <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="script">
+	 <!-- Plugins JS File -->
+    <script src="fe/js/jquery.min.js"></script>
+    <script src="fe/js/bootstrap.bundle.min.js"></script>
+    <script src="fe/js/jquery.hoverIntent.min.js"></script>
+    <script src="fe/js/jquery.waypoints.min.js"></script>
+    <script src="fe/js/superfish.min.js"></script>
+    <script src="fe/js/owl.carousel.min.js"></script>
+    <script src="fe/js/bootstrap-input-spinner.js"></script>
+    <script src="fe/js/jquery.plugin.min.js"></script>
+    <script src="fe/js/jquery.magnific-popup.min.js"></script>
+    <script src="fe/js/jquery.countdown.min.js"></script>
+    <!-- Main JS File -->
+    <script src="fe/js/main.js"></script>
+    <script src="fe/js/demos/demo-6.js"></script>
+    
+  <div id="product-list">
+    <!-- Nội dung danh sách sản phẩm sẽ được cập nhật -->
+    <!-- Dữ liệu sản phẩm sẽ được hiển thị ở đây -->
+</div>
+
+<div id="sidebar">
+    <!-- Nội dung thanh sidebar -->
+</div>
+
+<div id="footer">
+    <!-- Nội dung footer -->
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function() {
+        // Xử lý sự kiện khi checkbox thay đổi
+        $('input[type="checkbox"].category-checkbox').change(function() {
+            // Khởi tạo một mảng để lưu trữ các categoryId đã chọn
+            var selectedCategories = [];
+
+            // Lặp qua tất cả checkbox đã chọn
+            $('input[type="checkbox"].category-checkbox:checked').each(function() {
+                // Lấy categoryId của từng checkbox đã chọn và thêm vào mảng
+                var categoryId = $(this).attr('id').replace('cat-', '');
+                selectedCategories.push(categoryId);
+            });
+
+            // Gửi yêu cầu AJAX để lấy danh sách sản phẩm theo các categoryId đã chọn
+            $.ajax({
+                type: 'GET',
+                url: '/home/shop',
+                data: {
+                    categoryIds: selectedCategories, // Truyền mảng các categoryId đã chọn
+                    page: 1  // Mặc định là trang 1 khi thay đổi danh mục
+                },
+                success: function(data) {
+                    // Cập nhật nội dung của #product-list
+                    $('#product-list').html(data);
+                },
+                error: function() {
+                    alert('Đã xảy ra lỗi khi lấy dữ liệu sản phẩm!');
+                }
+            });
+        });
+    });
+</script>
+
+
+
+</div>

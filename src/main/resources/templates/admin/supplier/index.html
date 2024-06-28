@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:replace="admin/fragments/head :: head"></div>
+
+
+
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<div th:replace="admin/fragments/header :: header"></div>
+
+		<!-- =============================================== -->
+
+		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+
+			<section class="content-header">
+				<h1>Supplier Page</h1>
+				<ol class="breadcrumb">
+					<li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Admin
+							Home</a></li>
+					<li><a th:href="@{/admin/supplier}">Supplier</a></li>
+					<li class="active">Supplier page</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<div class="box">
+					<div class="box-header with-border">
+						<div class="box-header with-border">
+
+						<div class=row>
+							<div class="col-md-10">
+								<form>
+									<div class="input-group input-group-sm hidden-xs"
+										style="width: 50%;">
+
+										<input type="text" name="keyword"
+											class="form-control pull-right" placeholder="Search"
+											th:value="${keyword}">
+										<div class="input-group-btn">
+											<button type="submit" class="btn btn-default">
+												<i class="fa fa-search"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+								<br />
+							</div>
+						</div>	
+					</div>
+
+					<div class="box-body">
+							<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th>ID</th>
+									<th>Supplier Name</th>
+									<th>Gender</th>
+									<th>Phone</th>
+									<th>Email</th>
+									<th>address</th>
+									<th>Action</th>
+								</tr>
+
+
+								<tr th:each="s : ${ListSupplier}">
+									<td th:text="${s.id}"></td>
+									<td th:text="${s.supplierName}"></td>
+									<td th:text="${s.gender ? 'Nam' : 'Nữ'}"></td>
+									<td th:text="${s.phone}"></td>
+									<td th:text="${s.email}"></td>
+									<td th:text="${s.address}"></td>
+									<td>
+										<a
+										th:href="@{/admin/edit-supplier/{id}(id=${s.id})}"
+										class="btn btn-success">Edit</a> 
+										<a
+										th:href="@{/admin/delete-supplier/{id}(id=${s.id})}"
+										class="btn btn-danger"
+										onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này ?')">Delete</a>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+
+					<div class="box-footer clearfix">
+						<ul class="pagination pagination-sm no-margin pull-right">
+						
+							<li th:if="${currentPage > 1}"><a th:href="@{'/admin/supplier?pageNo='+${currentPage-1}}">«</a></li>
+
+							<li th:each="i:${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : '' }"><a th:href="@{'/admin/supplier?keyword='+${keyword}+'&pageNo='+${i}}" th:text="${i}"></a></li>
+
+							<li th:if="${currentPage < totalPage}"><a th:href="@{'/admin/supplier?pageNo='+${currentPage+1}}">»</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</section>
+
+		</div>
+
+
+		<div th:replace="admin/fragments/footer :: footer"></div>
+
+	</div>
+
+
+	<div th:replace="admin/fragments/script :: script"></div>
+</body>
+
+</html>
