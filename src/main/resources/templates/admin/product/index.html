@@ -79,7 +79,7 @@
 								<tr th:each="product : ${listProduct}">
 									<td th:text="${product.id}"></td>
 									<td th:text="${product.productName}"></td>
-									<td th:text="${product.price}"></td>
+									<td th:text="${product.price}+'$'"></td>
 									<td>
 										<img th:src="@{'/uploads/'+${product.image}}" width=60px;>
 									</td>
@@ -89,6 +89,9 @@
 										<a
 										th:href="@{/admin/edit-product/{id}(id=${product.id})}"
 										class="btn btn-success">Edit</a> 
+										<a
+										th:href="@{/admin/detail-product/{id}(id=${product.id})}"
+										class="btn btn-primary">Detail</a> 
 										<a
 										th:href="@{/admin/delete-product/{id}(id=${product.id})}"
 										class="btn btn-danger"

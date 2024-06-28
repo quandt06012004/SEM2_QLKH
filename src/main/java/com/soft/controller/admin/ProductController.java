@@ -37,7 +37,9 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private SupplierService supplierService;
+	
 	@GetMapping("/product")
+	
 	public String index(Model model, @RequestParam(name="keyword",defaultValue = "") String keyword,
 			@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
 		Page<Product> list = this.productService.getAll(pageNo, 4);
@@ -107,6 +109,21 @@ public class ProductController {
 		model.addAttribute("product", product);
 		return "admin/product/edit";
 	}
+	 @GetMapping("/detail-product/{id}")
+	    public String detail(Model model, @PathVariable("id") Integer id) {
+	        Product product = this.productService.findById(id);
+	        if (product == null) {
+	            model.addAttribute("error", "Product not found");
+	            return "redirect:/admin/product";
+	        }
+	        List<Category> listCate = this.categoryService.getAll();
+	        model.addAttribute("listCate", listCate);
+	        List<Suppliers> listSupp = this.supplierService.getAll();
+	        model.addAttribute("listSupp", listSupp);
+	        model.addAttribute("product", product);
+	        return "admin/product/detail"; 
+	    }
+
 
 	@PostMapping("/edit-product")
 	public String update(@ModelAttribute("product") Product product, @RequestParam("fileImage") MultipartFile file, Model model) {
