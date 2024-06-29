@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -42,7 +43,6 @@ public class Product {
     @Column(name = "SalePrice")
     private Double salePrice;
 
-  
     @Column(name = "image")
     private String image;
 
@@ -75,110 +75,104 @@ public class Product {
     @JoinColumn(name = "supplierId", referencedColumnName = "id")
     private Suppliers suppliers;
 
-    public Product() {}
+    
+    @Transient
+    private int totalQuantity;
 
-    public Product(Integer id, String productName, Double price, Double salePrice, String image, String description,
-                   Date createdAt, GenderForProduct genderForProduct, Category category, Set<Inventory> inventory,
-                   Suppliers suppliers) {
-        super();
+    // Getters and setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(Double salePrice) {
         this.salePrice = salePrice;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public GenderForProduct getGenderForProduct() {
+        return genderForProduct;
+    }
+
+    public void setGenderForProduct(GenderForProduct genderForProduct) {
         this.genderForProduct = genderForProduct;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Set<Inventory> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Set<Inventory> inventory) {
         this.inventory = inventory;
+    }
+
+    public Suppliers getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(Suppliers suppliers) {
         this.suppliers = suppliers;
     }
 
-	public Integer getId() {
-		return id;
-	}
+    public int getTotalQuantity() {
+        return totalQuantity;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public Double getSalePrice() {
-		return salePrice;
-	}
-
-	public void setSalePrice(Double salePrice) {
-		this.salePrice = salePrice;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public GenderForProduct getGenderForProduct() {
-		return genderForProduct;
-	}
-
-	public void setGenderForProduct(GenderForProduct genderForProduct) {
-		this.genderForProduct = genderForProduct;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Set<Inventory> getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(Set<Inventory> inventory) {
-		this.inventory = inventory;
-	}
-
-	public Suppliers getSuppliers() {
-		return suppliers;
-	}
-
-	public void setSuppliers(Suppliers suppliers) {
-		this.suppliers = suppliers;
-	}
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
 }
