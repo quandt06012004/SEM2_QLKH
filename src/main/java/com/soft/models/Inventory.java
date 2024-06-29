@@ -29,7 +29,7 @@ public class Inventory {
 	@ManyToOne
 	@JoinColumn(name="product_id", referencedColumnName = "id")
 	private Product product;
-	
+
 	public Inventory() {
 		// TODO Auto-generated constructor stub
 	}
@@ -73,7 +73,6 @@ public class Inventory {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	 
 	
 	
 }

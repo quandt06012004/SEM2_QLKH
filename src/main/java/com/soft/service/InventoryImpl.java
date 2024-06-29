@@ -1,5 +1,6 @@
 package com.soft.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,6 @@ public class InventoryImpl implements InventoryService{
 	@Override
 	public Boolean update(Inventory inventory) {
 		// TODO Auto-generated method stub
-		
 	 try {
 			this.inventoryResitory.save(inventory);
 			return true;
@@ -75,7 +75,7 @@ public class InventoryImpl implements InventoryService{
 	@Override
 	public Page<Inventory> getAll(Integer pageNo) {
 		// TODO Auto-generated method stub
-		Pageable pageable = PageRequest.of(pageNo - 1, 5);
+		Pageable pageable = PageRequest.of(pageNo - 1, 4);
 		return this.inventoryResitory.findAll(pageable);
 	}
 
@@ -85,4 +85,11 @@ public class InventoryImpl implements InventoryService{
 		return null;
 	}
 
+	@Override
+    public Page<Inventory> findAllBetweenDates(Date startDate, Date endDate, Pageable pageable) {
+        return this.inventoryResitory.findAllBetweenDates(startDate, endDate, pageable);
+    }
+	
+	
+	
 }

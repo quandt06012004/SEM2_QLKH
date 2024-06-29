@@ -20,38 +20,30 @@
 
             <section class="content">
                 <div class="box box-primary">
-                   <form role="form" method="post" th:action="@{/admin/inventory-add}"
-						th:object="${inventory}">
-						<input type="hidden" class="form-control" id="id" placeholder="id" th:field="*{id}">
-						<div class="box-body">
-							<div class="form-group">
-								<label for="price">Quantity :</label> <input type="number"
-									class="form-control" id="quantity" placeholder="Quantiry"
-									th:field="*{quantity}">
-							</div>
-							<div class="form-group">
-								<label for="price">Last Update :</label> <input type="date"
-									class="form-control" id="lastUpdate" placeholder="LastUpdate"
-									th:field="*{lastUpdated}">
-							</div>
-							<div class="form-group">
-								<div class="form-group">
-									<label>Product :</label> <select
-										class="form-control select2 select2-hidden-accessible"
-										style="width: 100%;" th:field="*{product.id}">
-										<option 
-											th:value="${0}">----choose----</option>
-										<option th:each="p : ${listProduct}"
-											th:value="${p.id}" th:text="${p.productName}"></option>
-									</select>
-								</div>
-							</div>
-						</div>
+                   <form role="form" method="post" th:action="@{/admin/edit-inventory}" th:object="${inventory}">
+							    <div class="box-body">
+							    <input type="hidden" class="form-control" id="id" placeholder="id" th:field="*{id}">
+							        <div class="form-group">
+							            <label for="quantity">Quantity:</label>
+							            <input type="number" class="form-control" id="quantity" placeholder="Quantity" th:field="*{quantity}">
+							        </div>
+							        <div class="form-group">
+								            <label for="startDate">Last Date:</label>
+								            <input type="date" class="form-control" id="startDate" placeholder="Last Date" th:field="*{lastUpdated}">
+								        </div>
+							        <div class="form-group">
+							            <label>Product:</label>
+							            <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" th:field="*{product.id}">
+							                <option th:value="${0}">----choose----</option>
+							                <option th:each="p : ${listProduct}" th:value="${p.id}" th:text="${p.productName}"></option>
+							            </select>
+							        </div>
+							    </div>
+							    <div class="box-footer">
+							        <button type="submit" class="btn btn-primary">Submit</button>
+							    </div>
+							</form>
 
-						<div class="box-footer">
-							<button type="submit" class="btn btn-primary">Submit</button>
-						</div>
-					</form>
                 </div>
             </section>
         </div>

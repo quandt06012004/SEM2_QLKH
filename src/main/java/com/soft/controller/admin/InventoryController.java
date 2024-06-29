@@ -1,9 +1,13 @@
 package com.soft.controller.admin;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,15 +35,39 @@ public class InventoryController {
 	private InventoryService inventoryService;
 	@Autowired
 	private ProductService productService;
+//	@GetMapping("/inventory")
+//	public String index(Model model, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+//		Page<Inventory> listInventory = this.inventoryService.getAll(pageNo);
+//		model.addAttribute("totalPage", listInventory.getTotalPages());
+//		model.addAttribute("currentPage", pageNo);
+//		model.addAttribute("listInventory", listInventory);
+//		return "admin/inventory/index";
+//	}
 	@GetMapping("/inventory")
-	public String index(Model model, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
-		Page<Inventory> listInventory = this.inventoryService.getAll(pageNo);
-		model.addAttribute("totalPage", listInventory.getTotalPages());
-		model.addAttribute("currentPage", pageNo);
-		model.addAttribute("listInventory", listInventory);
-		return "admin/inventory/index";
+	public String inventory(Model model,
+	                        @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+	                        @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+	                        @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+
+	    Page<Inventory> page;
+	    if (startDate != null && endDate != null) {
+	        // Nếu có startDate và endDate, thực hiện tìm kiếm theo khoảng thời gian
+	        Pageable pageable = PageRequest.of(pageNo - 1, 4); 
+	        page = inventoryService.findAllBetweenDates(startDate, endDate, pageable);
+	    } else {
+	        // Nếu không có startDate và endDate, lấy tất cả dữ liệu
+	        page = inventoryService.getAll(pageNo);
+	    }
+	    model.addAttribute("startDate", startDate);
+	    model.addAttribute("endDate", endDate);
+	    // Thêm các attribute cần thiết cho giao diện Thymeleaf
+	    model.addAttribute("listInventory", page.getContent()); 
+	    model.addAttribute("currentPage", pageNo); 
+	    model.addAttribute("totalPage", page.getTotalPages()); 
+
+	    return "admin/inventory/index";
 	}
-	
+
 	@GetMapping("/inventory-add")
 	public String add(Model model) {
 		Inventory inventory = new Inventory();
@@ -99,4 +127,6 @@ public class InventoryController {
 	        return "admin/inventory/edit";
 	    }
 	}
+	
+
 }

@@ -34,13 +34,26 @@
 
 			<!-- Main content -->
 			<section class="content">
-
+					 
 				<div class="box">
 					<div class="box-header with-border">
 						<div class="box-header with-border">
 
 						<div class=row>
 							<div class="col-md-10">
+							<h1>Search Inventory</h1>
+						    <form th:action="@{/admin/inventory}" method="get">
+							    <div style="display: flex; gap: 10px; align-items: center;">
+							        <label for="startDate">Start Date:</label>
+							        <input type="date" id="startDate" name="startDate" th:attr="value=${startDate != null} ? ${#dates.format(startDate, 'yyyy-MM-dd')} : ''" required>
+							        
+							        <label for="endDate">End Date:</label>
+							        <input type="date" id="endDate" name="endDate" th:attr="value=${endDate != null} ? ${#dates.format(endDate, 'yyyy-MM-dd')} : ''" required>
+							        
+							        <button type="submit" class="btn btn-primary">Search</button>
+							    </div>
+							</form>
+
 								<br />
 							</div>
 						</div>	
@@ -85,12 +98,36 @@
 						
 							<li th:if="${currentPage > 1}"><a th:href="@{'/admin/inventory?pageNo='+${currentPage-1}}">«</a></li>
 
-							<li th:each="i:${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : '' }"><a th:href="@{'/admin/inventory?pageNo='+${i}}" th:text="${i}"></a></li>
+							 <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}">
+					            <a th:href="@{'/admin/inventory?startDate=' + (${startDate} != null ? ${#dates.format(startDate, 'yyyy-MM-dd')} : '') + '&endDate=' + (${endDate} != null ? ${#dates.format(endDate, 'yyyy-MM-dd')} : '') + '&pageNo=' + ${i}}" th:text="${i}"></a>
+					        </li>
 
 							<li th:if="${currentPage < totalPage}"><a th:href="@{'/admin/inventory?pageNo='+${currentPage+1}}">»</a>
 							</li>
 						</ul>
 					</div>
+
+
+
+
+
+
+<!-- <div class="box-footer clearfix"> -->
+<!--     <ul class="pagination pagination-sm no-margin pull-right"> -->
+<!--         <li th:if="${currentPage > 1}"> -->
+<!--             <a th:href="@{'/admin/inventory?startDate=' + ${startDate} + '&endDate=' + ${endDate} + '&pageNo=' + (currentPage - 1)}">«</a> -->
+<!--         </li> -->
+        
+<!--         <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}"> -->
+<!--             <a th:href="@{'/admin/inventory?startDate=' + ${startDate} + '&endDate=' + ${endDate} + '&pageNo=' + ${i}}" th:text="${i}"></a> -->
+<!--         </li> -->
+
+<!--         <li th:if="${currentPage < totalPage}"> -->
+<!--             <a th:href="@{'/admin/inventory?startDate=' + ${startDate} + '&endDate=' + ${endDate} + '&pageNo=' + (currentPage + 1)}">»</a> -->
+<!--         </li> -->
+<!--     </ul> -->
+<!-- </div> -->
+
 				</div>
 
 			</section>
