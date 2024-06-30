@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,8 @@ import com.soft.models.Inventory;
 import com.soft.models.Product;
 import com.soft.service.InventoryService;
 import com.soft.service.ProductService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -76,19 +79,23 @@ public class InventoryController {
 		model.addAttribute("listProduct", listProduct);
 		return "admin/inventory/add";
 	}
+	 @PostMapping("/inventory-add")
+	    public String save(@Valid @ModelAttribute("inventory") Inventory inventory, BindingResult result, Model model) {
+	        if (result.hasErrors()) {
+	            List<Product> listProduct = productService.getAll();
+	            model.addAttribute("listProduct", listProduct);
+	            return "admin/inventory/add";
+	        }
+
+	        if (inventoryService.create(inventory)) {
+	            return "redirect:/admin/inventory";
+	        } else {
+	            List<Product> listProduct = productService.getAll();
+	            model.addAttribute("listProduct", listProduct);
+	            return "admin/inventory/add";
+	        }
+	    }
 	
-	@PostMapping("/inventory-add")
-	public String save(@ModelAttribute("inventory") Inventory inventory, Model model) {
-		//TODO: process POST request
-		if(this.inventoryService.create(inventory)) {
-			return "redirect:/admin/inventory";
-		}
-		else {
-			List<Product> listProduct = this.productService.getAll();
-			model.addAttribute("listProduct", listProduct);
-			return "admin/product/add";
-		}
-	}
 	
 	@GetMapping("/delete-inventory/{id}")
 	public String delete(@PathVariable("id") Integer id, Model model) {
