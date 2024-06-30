@@ -29,53 +29,67 @@ public class InventoryHistory {
     private Date dateUpdated;
 
     @ManyToOne
-    @JoinColumn(name="inventory_id", referencedColumnName = "id")
-    private Inventory inventory;
-    
+    @JoinColumn(name = "inventory_out_id", referencedColumnName = "id")
+    private Inventory_out inventoryOut;
+
     @ManyToOne
-    @JoinColumn(name="inventoryOut_id", referencedColumnName = "id")
-    private Inventory_out inventory_out;
+    @JoinColumn(name = "inventory_id", referencedColumnName = "id")
+    private Inventory inventory;
 
-    public InventoryHistory() {
-        // Default constructor
-    }
+   public InventoryHistory() {
+	// TODO Auto-generated constructor stub
+}
 
-    public InventoryHistory(Integer quantity, Date dateUpdated, Inventory inventory) {
-        this.quantity = quantity;
-        this.dateUpdated = dateUpdated;
-        this.inventory = inventory;
-    }
+public InventoryHistory(Integer id, Integer quantity, Date dateUpdated, Inventory_out inventoryOut,
+		Inventory inventory) {
+	super();
+	this.id = id;
+	this.quantity = quantity;
+	this.dateUpdated = dateUpdated;
+	this.inventoryOut = inventoryOut;
+	this.inventory = inventory;
+}
 
-    // Getters and setters
-    public Integer getId() {
-        return id;
-    }
+public Integer getId() {
+	return id;
+}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+public void setId(Integer id) {
+	this.id = id;
+}
 
-    public Integer getQuantity() {
-        return quantity;
-    }
+public Integer getQuantity() {
+	return quantity;
+}
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+public void setQuantity(Integer quantity) {
+	this.quantity = quantity;
+}
 
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
+public Date getDateUpdated() {
+	return dateUpdated;
+}
 
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
-    }
+public void setDateUpdated(Date dateUpdated) {
+	this.dateUpdated = dateUpdated;
+}
 
-    public Inventory getInventory() {
-        return inventory;
-    }
+public Inventory_out getInventoryOut() {
+	return inventoryOut;
+}
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
+public void setInventoryOut(Inventory_out inventoryOut) {
+	this.inventoryOut = inventoryOut;
+}
+
+public Inventory getInventory() {
+	return inventory;
+}
+
+public void setInventory(Inventory inventory) {
+	this.inventory = inventory;
+}
+
+
+   
 }

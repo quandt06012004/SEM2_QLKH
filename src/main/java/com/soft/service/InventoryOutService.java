@@ -19,12 +19,13 @@ public interface InventoryOutService {
 
 	Boolean update(Inventory_out inventory_out);
 
-	List<Inventory_out> searchInventory_out(String keyword);
-
 	Boolean delete(Integer id);
 
+
 	Page<Inventory_out> getAll(Integer pageNo);
+	
 	Page<Inventory_out> searchInventory_out(String keyword , Integer pageNo);
+	List<Inventory_out> searchInventory_out(String keyword);
 	
 	
 	public Page<Inventory_out> findAllBetweenDates(Date startDate, Date endDate, Pageable pageable);
@@ -32,5 +33,6 @@ public interface InventoryOutService {
 
 	List<Inventory_out> findByProduct(Product product);
 	
-	List<InventoryHistory> getInventoryHistoryByInventoryId(Integer inventoryOutId);
+	List<InventoryHistory> getInventoryHistoryByInventoryOutId(Integer inventoryOutId);
+	public int getTotalQuantity(Integer productId);
 }

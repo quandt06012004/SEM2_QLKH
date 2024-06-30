@@ -88,26 +88,48 @@
 
                         <!-- Inventory History -->
                         <div class="form-group">
-                            <h3>Inventory History</h3>
-                            <div th:each="inventory : ${inventories}">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>ID History</th>
-                                            <th>Quantity Added</th>
-                                            <th>Date Updated</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="history : ${inventory.history}">
-                                            <td th:text="${history.id}"></td>
-                                            <td th:text="${history.quantity}"></td>
-                                            <td th:text="${#dates.format(history.dateUpdated, 'yyyy-MM-dd')}"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+    <h3>Inventory History</h3>
+    <div th:each="inventory : ${inventories}">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID History</th>
+                    <th>Quantity Added</th>
+                    <th>Date Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="history : ${inventory.history}">
+                    <td th:text="${history.id}"></td>
+                    <td th:text="${history.quantity}"></td>
+                    <td th:text="${#dates.format(history.dateUpdated, 'yyyy-MM-dd')}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+						<div class="form-group">
+    <h3>Inventory out History</h3>
+    <div th:each="inventoryOut : ${inventoryOuts}">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID History</th>
+                    <th>Quantity Subtraction</th>
+                    <th>Date Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="history : ${inventoryOut.history}">
+                    <td th:text="${history.id}"></td>
+                    <td th:text="${history.quantity}"></td>
+                    <td th:text="${#dates.format(history.dateUpdated, 'yyyy-MM-dd')}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
                     </div>
                 </div>

@@ -18,8 +18,8 @@ import com.soft.repository.InventoryOutRepository;
 public class InventoryOutImpl implements InventoryOutService{
 	@Autowired
 	private InventoryOutRepository inventoryOutRepository;
-//	   @Autowired
-//	    private InventoryHistoryService inventoryHistoryService;
+	 @Autowired
+	 private InventoryHistoryService inventoryHistoryService;
 
 	@Override
 	public List<Inventory_out> getAll() {
@@ -33,7 +33,7 @@ public class InventoryOutImpl implements InventoryOutService{
 	
 	     try {
 	    	 this.inventoryOutRepository.save(inventory_out);
-//	            saveInventoryHistory(inventory_out);
+	            saveInventoryHistory(inventory_out);
 	            return true;
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -105,17 +105,23 @@ public class InventoryOutImpl implements InventoryOutService{
 	}
 
 	@Override
-	public List<InventoryHistory> getInventoryHistoryByInventoryId(Integer inventoryOutId) {
+	public List<InventoryHistory> getInventoryHistoryByInventoryOutId(Integer inventoryOutId) {
 		// TODO Auto-generated method stub
-		return this.getInventoryHistoryByInventoryId(inventoryOutId);
+		return inventoryHistoryService.findByInventoryOutId(inventoryOutId);
 	}
-//	private void saveInventoryHistory(Inventory_out inventory_out) {
-//        InventoryHistory history = new InventoryHistory();
-//        history.setQuantity(inventory_out.getQuantity());
-//        history.setDateUpdated(new Date());
-//        history.setInventory(inventory);
-//        inventoryHistoryService.create(history);
-//    }
+	private void saveInventoryHistory(Inventory_out inventory_out) {
+		 InventoryHistory history = new InventoryHistory();
+	        history.setQuantity(inventory_out.getQuantity_out());
+	        history.setDateUpdated(new Date());
+	        history.setInventoryOut(inventory_out);
+	        inventoryHistoryService.create(history);
+    }
+
+	@Override
+	public int getTotalQuantity(Integer productId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 //	@Override
 //	public int getTotalQuantity(Integer productId) {
@@ -123,8 +129,8 @@ public class InventoryOutImpl implements InventoryOutService{
 //		  int totalQuantity = 0;
 //
 //	        // Tính tổng số lượng tồn kho bằng cách lấy số lượng tồn và trừ đi số lượng đã xuất
-//	        List<Inventory> inventories = InventoryOutService.findById(productId);
-//	        for (Inventory inventory : inventories) {
+//	        List<Inventory_out> inventories_out = InventoryOutService.findById(productId);
+//	        for (Inventory inventory : inventories_out) {
 //	            totalQuantity += inventory.getQuantity();
 //	        }
 //

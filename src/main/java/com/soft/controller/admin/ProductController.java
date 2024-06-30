@@ -302,13 +302,22 @@ public class ProductController {
 
 		List<Inventory> inventories = inventoryService.findByProduct(product);
 		model.addAttribute("inventories", inventories);
-
 		// Lấy lịch sử Inventory cho từng Inventory và thêm vào model
 		for (Inventory inventory : inventories) {
 			List<InventoryHistory> history = inventoryService.getInventoryHistoryByInventoryId(inventory.getId());
 			inventory.setHistory(history);
 		}
+		
+		 // Lấy danh sách Inventory_out liên quan đến sản phẩm này
+	    List<Inventory_out> inventoryOuts = inventoryOutService.findByProduct(product);
+	    model.addAttribute("inventoryOuts", inventoryOuts);
 
+	    // Lấy lịch sử Inventory_out cho từng Inventory_out và thêm vào model
+	    for (Inventory_out inventoryOut : inventoryOuts) {
+	        List<InventoryHistory> historyOut = inventoryOutService.getInventoryHistoryByInventoryOutId(inventoryOut.getId());
+	        inventoryOut.setHistory(historyOut);
+	    }
+		
 		return "admin/product/detail";
 	}
 

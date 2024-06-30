@@ -36,7 +36,7 @@ public class Inventory_out {
 	    @JoinColumn(name="product_id", referencedColumnName = "id")
 	    private Product product;
 
-	    @OneToMany(mappedBy = "inventory_out", cascade = CascadeType.ALL)
+	    @OneToMany(mappedBy = "inventoryOut", cascade = CascadeType.ALL)
 //	    , orphanRemoval = true
 	    private List<InventoryHistory> history = new ArrayList<>();
 	  
