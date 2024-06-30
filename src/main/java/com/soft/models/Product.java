@@ -69,7 +69,9 @@ public class Product {
     // inventory
     @OneToMany(mappedBy = "product")
     private Set<Inventory> inventory;
-
+    
+    @OneToMany(mappedBy = "product")
+    private Set<Inventory_out> inventory_out;
     // suppliers
     @ManyToOne
     @JoinColumn(name = "supplierId", referencedColumnName = "id")

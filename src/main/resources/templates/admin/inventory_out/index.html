@@ -23,12 +23,12 @@
 		<div class="content-wrapper">
 
 			<section class="content-header">
-				<h1>Inventory Page</h1>
+				<h1>Inventory out Page</h1>
 				<ol class="breadcrumb">
 					<li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Admin
 							Home</a></li>
-					<li><a th:href="@{/admin/inventory}">Inventory</a></li>
-					<li class="active">Inventory page</li>
+					<li><a th:href="@{/admin/inventory-out}">Inventory out</a></li>
+					<li class="active">Inventory out page</li>
 				</ol>
 			</section>
 
@@ -41,8 +41,8 @@
 
 						<div class=row>
 							<div class="col-md-10">
-							<h4>Search Inventory</h4>
-						    <form th:action="@{/admin/inventory}" method="get">
+							<h4>Search Inventory out</h4>
+						    <form th:action="@{/admin/inventory-out}" method="get">
 							    <div style="display: flex; gap: 10px; align-items: center;">
 							        <label for="startDate">Start Date:</label>
 							        <input type="date" id="startDate" name="startDate" th:attr="value=${startDate != null} ? ${#dates.format(startDate, 'yyyy-MM-dd')} : ''" required>
@@ -73,17 +73,17 @@
 
 								</tr>
 
-								<tr th:each="inventory : ${listInventory}">
-									<td th:text="${inventory.id}"></td>
-									<td th:text="${inventory.quantity}"></td>
-									<td th:text="${#dates.format(inventory.lastUpdated, 'yyyy-MM-dd')}"></td>
-									<td th:text="${inventory.product.productName}"></td>
+								<tr th:each="inventory_out : ${listInventory_out}">
+									<td th:text="${inventory_out.id}"></td>
+									<td th:text="${inventory_out.quantity_out}"></td>
+									<td th:text="${#dates.format(inventory_out.lastUpdated, 'yyyy-MM-dd')}"></td>
+									<td th:text="${inventory_out.product.productName}"></td>
 									<td>
 										<a
-										th:href="@{/admin/edit-inventory/{id}(id=${inventory.id})}"
+										th:href="@{/admin/edit-inventory-out/{id}(id=${inventory_out.id})}"
 										class="btn btn-success">Edit</a> 
 										<a
-										th:href="@{/admin/delete-inventory/{id}(id=${inventory.id})}"
+										th:href="@{/admin/delete-inventory-out/{id}(id=${inventory_out.id})}"
 										class="btn btn-danger"
 										onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này ?')">Delete</a>
 									</td>
@@ -96,13 +96,13 @@
 					<div class="box-footer clearfix">
 						<ul class="pagination pagination-sm no-margin pull-right">
 						
-							<li th:if="${currentPage > 1}"><a th:href="@{'/admin/inventory?pageNo='+${currentPage-1}}">«</a></li>
+							<li th:if="${currentPage > 1}"><a th:href="@{'/admin/inventory-out?pageNo='+${currentPage-1}}">«</a></li>
 
 							 <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i ? 'active' : ''}">
-					            <a th:href="@{'/admin/inventory?startDate=' + (${startDate} != null ? ${#dates.format(startDate, 'yyyy-MM-dd')} : '') + '&endDate=' + (${endDate} != null ? ${#dates.format(endDate, 'yyyy-MM-dd')} : '') + '&pageNo=' + ${i}}" th:text="${i}"></a>
+					            <a th:href="@{'/admin/inventory-out?startDate=' + (${startDate} != null ? ${#dates.format(startDate, 'yyyy-MM-dd')} : '') + '&endDate=' + (${endDate} != null ? ${#dates.format(endDate, 'yyyy-MM-dd')} : '') + '&pageNo=' + ${i}}" th:text="${i}"></a>
 					        </li>
 
-							<li th:if="${currentPage < totalPage}"><a th:href="@{'/admin/inventory?pageNo='+${currentPage+1}}">»</a>
+							<li th:if="${currentPage < totalPage}"><a th:href="@{'/admin/inventory-out?pageNo='+${currentPage+1}}">»</a>
 							</li>
 						</ul>
 					</div>

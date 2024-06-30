@@ -10,123 +10,110 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.soft.models.Category;
-import com.soft.models.Inventory;
-import com.soft.models.Product;
-import com.soft.service.InventoryService;
-import com.soft.service.ProductService;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-
+import com.soft.models.Inventory_out;
+import com.soft.models.Product;
+import com.soft.service.InventoryOutService;
+import com.soft.service.ProductService;
 
 @Controller
 @RequestMapping("/admin")
-public class InventoryController {
+public class InventoryOutController {
 	@Autowired
-	private InventoryService inventoryService;
+	private InventoryOutService inventoryOutService;
 	@Autowired
 	private ProductService productService;
-//	@GetMapping("/inventory")
-//	public String index(Model model, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
-//		Page<Inventory> listInventory = this.inventoryService.getAll(pageNo);
-//		model.addAttribute("totalPage", listInventory.getTotalPages());
-//		model.addAttribute("currentPage", pageNo);
-//		model.addAttribute("listInventory", listInventory);
-//		return "admin/inventory/index";
-//	}
-	@GetMapping("/inventory")
-	public String inventory(Model model,
+	
+	@GetMapping("/inventory-out")
+	public String inventory_out(Model model,
 	                        @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
 	                        @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
 	                        @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
 
-	    Page<Inventory> page;
+	    Page<Inventory_out> page;
 	    if (startDate != null && endDate != null) {
 	        // Nếu có startDate và endDate, thực hiện tìm kiếm theo khoảng thời gian
 	        Pageable pageable = PageRequest.of(pageNo - 1, 4); 
-	        page = inventoryService.findAllBetweenDates(startDate, endDate, pageable);
+	        page = inventoryOutService.findAllBetweenDates(startDate, endDate, pageable);
 	    } else {
 	        // Nếu không có startDate và endDate, lấy tất cả dữ liệu
-	        page = inventoryService.getAll(pageNo);
+	        page = inventoryOutService.getAll(pageNo);
 	    }
 	    model.addAttribute("startDate", startDate);
 	    model.addAttribute("endDate", endDate);
+	    
 	    // Thêm các attribute cần thiết cho giao diện Thymeleaf
-	    model.addAttribute("listInventory", page.getContent()); 
+	    model.addAttribute("listInventory_out", page.getContent()); 
 	    model.addAttribute("currentPage", pageNo); 
 	    model.addAttribute("totalPage", page.getTotalPages()); 
 
-	    return "admin/inventory/index";
+	    return "admin/inventory_out/index";
 	}
 
-	@GetMapping("/inventory-add")
+	@GetMapping("/inventory-out-add")
 	public String add(Model model) {
-		Inventory inventory = new Inventory();
-		model.addAttribute("inventory", inventory);
+		Inventory_out inventory_out = new Inventory_out();
+		model.addAttribute("inventory_out", inventory_out);
 		List<Product> listProduct = this.productService.getAll();
 		model.addAttribute("listProduct", listProduct);
-		return "admin/inventory/add";
+		return "admin/inventory_out/add";
 	}
 	
-	@PostMapping("/inventory-add")
-	public String save(@ModelAttribute("inventory") Inventory inventory, Model model) {
+	@PostMapping("/inventory-out-add")
+	public String save(@ModelAttribute("inventory_out") Inventory_out inventory_out, Model model) {
 		//TODO: process POST request
-		if(this.inventoryService.create(inventory)) {
-			return "redirect:/admin/inventory";
+		if(this.inventoryOutService.create(inventory_out)) {
+			return "redirect:/admin/inventory-out";
 		}
 		else {
 			List<Product> listProduct = this.productService.getAll();
 			model.addAttribute("listProduct", listProduct);
-			return "admin/inventory/add";
+			return "admin/inventory_out/add";
 		}
 	}
 	
-	@GetMapping("/delete-inventory/{id}")
+	@GetMapping("/delete-inventory-out/{id}")
 	public String delete(@PathVariable("id") Integer id, Model model) {
-		if(this.inventoryService.delete(id)) {
-			return "redirect:/admin/inventory";
+		if(this.inventoryOutService.delete(id)) {
+			return "redirect:/admin/inventory-out";
 		}else {
-			return "redirect:/admin/inventory";
+			return "redirect:/admin/inventory-out";
 		}
 	}
 	
-	@GetMapping("/edit-inventory/{id}")
+	@GetMapping("/edit-inventory-out/{id}")
 	public String edit(Model model, @PathVariable("id") Integer id) {
-		Inventory inventory = this.inventoryService.findById(id);
-		if (inventory == null) {
-			model.addAttribute("error", "inventory not found");
-			return "redirect:/admin/inventory";
+		Inventory_out inventory_out = this.inventoryOutService.findById(id);
+		if (inventory_out == null) {
+			model.addAttribute("error", "inventory out not found");
+			return "redirect:/admin/inventory-out";
 		}
-		model.addAttribute("inventory", inventory);
+		model.addAttribute("inventory_out", inventory_out);
 		List<Product> listProduct = this.productService.getAll();
 		model.addAttribute("listProduct", listProduct);
 		
-		return "admin/inventory/edit";
+		return "admin/inventory_out/edit";
 	}
 	
 	
-	@PostMapping("/edit-inventory")
-	public String update(@ModelAttribute("inventory") Inventory inventory,  Model model) {
+	@PostMapping("/edit-inventory-out")
+	public String update(@ModelAttribute("inventory_out") Inventory_out inventory_out,  Model model) {
 	  
 	        
 
-	    if (this.inventoryService.update(inventory)) {
-	        return "redirect:/admin/inventory";
+	    if (this.inventoryOutService.update(inventory_out)) {
+	        return "redirect:/admin/inventory-out";
 	    } else {
 	        model.addAttribute("error", "Failed to update inventory");
-	        model.addAttribute("inventory", inventory);
-	        return "admin/inventory/edit";
+	        model.addAttribute("inventory", inventory_out);
+	        return "admin/inventory_out/edit";
 	    }
 	}
 	
-
 }

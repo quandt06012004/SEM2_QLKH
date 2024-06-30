@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="script"></div>
+<div th:fragment="script">
 
 <script th:src="@{assets/js/jquery.min.js}"></script>
 <script th:src="@{assets/js/jquery-ui.js}"></script>
@@ -8,3 +8,43 @@
 <script th:src="@{assets/js/adminlte.min.js}"></script>
 <script th:src="@{assets/js/dashboard.js}"></script>
 <script th:src="@{assets/js/function.js}"></script>
+
+
+<!-- <script th:inline="javascript"> -->
+//     /*<![CDATA[*/
+//     $(document).ready(function() {
+//         $('#submitBtn').on('click', function(event) {
+//             event.preventDefault(); // Ngăn chặn gửi form mặc định
+            
+//             var selectedProductId = $('#product_id').val();
+//             var quantityOut = parseInt($('#quantity_out').val());
+            
+//             // Kiểm tra số lượng tồn kho của sản phẩm từ server
+//             $.ajax({
+//                 url: '/admin/checkInventory/' + selectedProductId + '?quantityOut=' + quantityOut,
+//                 type: 'GET',
+//                 success: function(response) {
+//                     if (response === "Số lượng hợp lệ") {
+//                         // Submit form nếu số lượng hợp lệ
+//                         $('form').submit();
+//                     } else {
+//                         // Hiển thị thông báo lỗi bằng th:errors
+//                         var errorSpan = $('#quantity_out').next('.text-danger');
+//                         errorSpan.text(response); // Hiển thị thông báo lỗi
+//                         errorSpan.show(); // Hiển thị span thông báo lỗi
+//                         $('#quantity_out').val(0); // Đặt lại giá trị input quantity_out
+//                     }
+//                 },
+//                 error: function() {
+//                     console.error('Lỗi khi lấy dữ liệu số lượng tồn kho từ server.');
+//                 }
+//             });
+//         });
+//     });
+//     /*]]>*/
+<!-- </script> -->
+
+
+
+
+</div>

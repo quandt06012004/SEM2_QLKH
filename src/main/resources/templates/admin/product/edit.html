@@ -20,7 +20,8 @@
 
             <section class="content">
                 <div class="box box-primary">
-                   <form role="form" method="post" th:action="@{/admin/edit-product}" th:object="${product}" enctype="multipart/form-data">
+				    <form role="form" method="post" th:action="@{/admin/edit-product}"
+      						th:object="${product}" enctype="multipart/form-data">
 				    <div class="box-body">
 				    <input type="hidden" class="form-control" id="id" placeholder="id"
 			                   th:field="*{id}">
@@ -32,19 +33,6 @@
 			            <span th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"
 			                  class="help-block">Invalid product name.</span>
 			        </div>
-=======
-      th:object="${product}" enctype="multipart/form-data">
-    <div class="box-body">
-    <input type="hidden" class="form-control" id="id" placeholder="id"
-                   th:field="*{id}">
-        <!-- Product Name -->
-        <div class="form-group" th:classappend="${#fields.hasErrors('productName')} ? 'has-error' : ''">
-            <label for="productName">Product Name :</label>
-            <input type="text" class="form-control" id="productName" placeholder="Product Name"
-                   th:field="*{productName}">
-            <span th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"
-                  class="help-block">Invalid product name.</span>
-        </div>
 
         <!-- Price -->
         <div class="form-group" th:classappend="${#fields.hasErrors('price')} ? 'has-error' : ''">
@@ -98,7 +86,7 @@
 
         <!-- Gender -->
         <div class="form-group" th:classappend="${#fields.hasErrors('genderForProduct')} ? 'has-error' : ''">
-            <label for="gender">Gender:</label>
+            <label for="gender">for Gender:</label>
             <select class="form-control" id="gender" th:field="*{genderForProduct}">
                 <option th:each="gender : ${T(com.soft.models.GenderForProduct).values()}"
                         th:value="${gender}" th:text="${#strings.capitalize(gender.name().toLowerCase())}">

@@ -31,6 +31,10 @@ public class InventoryHistory {
     @ManyToOne
     @JoinColumn(name="inventory_id", referencedColumnName = "id")
     private Inventory inventory;
+    
+    @ManyToOne
+    @JoinColumn(name="inventoryOut_id", referencedColumnName = "id")
+    private Inventory_out inventory_out;
 
     public InventoryHistory() {
         // Default constructor

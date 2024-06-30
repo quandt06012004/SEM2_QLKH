@@ -47,17 +47,22 @@
 							<li><a th:href="@{/admin/product-add}"><i class="fa fa-circle-o"></i> Thêm mới</a></li>
 						</ul>
 					</li>
-					
-					<li class="treeview"><a href=""> <i class="fa fa-dashboard"></i> <span>Quản lý kho</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+					<li class="treeview"><a href=""> <i class="fa fa-dashboard"></i> <span>Nhà Cung Cấp</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+						<ul class="treeview-menu">
+							<li><a th:href="@{/admin/supplier}"><i class="fa fa-circle-o"></i> Danh sách</a></li>
+							<li><a th:href="@{/admin/supplier-add}"><i class="fa fa-circle-o"></i> Thêm mới</a></li>
+						</ul>
+					</li>
+					<li class="treeview"><a href=""> <i class="fa fa-dashboard"></i> <span>Quản lý kho nhập</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/admin/inventory}"><i class="fa fa-circle-o"></i> Danh sách</a></li>
 							<li><a th:href="@{/admin/inventory-add}"><i class="fa fa-circle-o"></i> Thêm mới</a></li>
 						</ul>
 					</li>
-					<li class="treeview"><a href=""> <i class="fa fa-dashboard"></i> <span>Nhà Cung Cấp</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+					<li class="treeview"><a href=""> <i class="fa fa-dashboard"></i> <span>Quản lý kho xuất</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 						<ul class="treeview-menu">
-							<li><a th:href="@{/admin/supplier}"><i class="fa fa-circle-o"></i> Danh sách</a></li>
-							<li><a th:href="@{/admin/supplier-add}"><i class="fa fa-circle-o"></i> Thêm mới</a></li>
+							<li><a th:href="@{/admin/inventory-out}"><i class="fa fa-circle-o"></i> Danh sách</a></li>
+							<li><a th:href="@{/admin/inventory-out-add}"><i class="fa fa-circle-o"></i> Thêm mới</a></li>
 						</ul>
 					</li>
 					<li><a th:href="@{/admin/account/management}"> <i class="fa fa-th"></i> <span>Quản lý tài khoản</span>

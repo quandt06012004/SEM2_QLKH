@@ -44,55 +44,56 @@ public class Inventory {
     private List<InventoryHistory> history = new ArrayList<>();
 
     public Inventory() {
-        // Default constructor
-    }
+		// TODO Auto-generated constructor stub
+	}
 
-    public Inventory(Integer id, Integer quantity, Date lastUpdated, Product product) {
-        this.id = id;
-        this.quantity = quantity;
-        this.lastUpdated = lastUpdated;
-        this.product = product;
-    }
+	public Inventory(Integer id, Integer quantity, Date lastUpdated, Product product, List<InventoryHistory> history) {
+		super();
+		this.id = id;
+		this.quantity = quantity;
+		this.lastUpdated = lastUpdated;
+		this.product = product;
+		this.history = history;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-	
-	
-    public Integer getQuantity() {
-        return quantity;
-    }
+	public Integer getQuantity() {
+		return quantity;
+	}
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
 
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
 
-    public Product getProduct() {
-        return product;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    public List<InventoryHistory> getHistory() {
-        return history;
-    }
+	public List<InventoryHistory> getHistory() {
+		return history;
+	}
 
-    public void setHistory(List<InventoryHistory> history) {
-        this.history = history;
-    }
+	public void setHistory(List<InventoryHistory> history) {
+		this.history = history;
+	}
+    
 }

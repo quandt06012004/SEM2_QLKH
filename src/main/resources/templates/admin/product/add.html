@@ -101,7 +101,7 @@
 
         <!-- Gender -->
         <div class="form-group" th:classappend="${#fields.hasErrors('genderForProduct')} ? 'has-error' : ''">
-            <label for="gender">Gender:</label>
+            <label for="gender">For Gender:</label>
             <select class="form-control" id="gender" th:field="*{genderForProduct}">
                 <option th:each="gender : ${T(com.soft.models.GenderForProduct).values()}"
                         th:value="${gender}" th:text="${#strings.capitalize(gender.name().toLowerCase())}">

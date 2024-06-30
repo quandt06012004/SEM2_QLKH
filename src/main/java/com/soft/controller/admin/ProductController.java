@@ -26,13 +26,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.soft.models.Category;
 import com.soft.models.Inventory;
 import com.soft.models.InventoryHistory;
+import com.soft.models.Inventory_out;
 import com.soft.models.Product;
 import com.soft.models.Suppliers;
 import com.soft.service.CategoryService;
+import com.soft.service.InventoryOutService;
 import com.soft.service.InventoryService;
 import com.soft.service.ProductService;
 import com.soft.service.StorageService;
@@ -54,7 +57,9 @@ public class ProductController {
 	private SupplierService supplierService;
 	@Autowired
 	private InventoryService inventoryService;
-
+	@Autowired
+	private InventoryOutService inventoryOutService;
+	
 	@GetMapping("/export-products")
 	public ResponseEntity<byte[]> exportProductsToExcel() {
 	    List<Product> products = productService.getAll();
@@ -167,15 +172,35 @@ public class ProductController {
 
 	    return ResponseEntity.badRequest().build();
 	}
+	
+	
+//	@GetMapping("/checkInventory/{productId}")
+//	@ResponseBody
+//	public ResponseEntity<String> checkInventory(@PathVariable("productId") Integer productId,
+//	                                             @RequestParam("quantityOut") Integer quantityOut) {
+//	    Product product = productService.findById(productId);
+//	    int totalQuantity = product.getTotalQuantity();
+//	    
+//	    if (quantityOut > totalQuantity) {
+//	        return ResponseEntity.badRequest().body("Số lượng xuất không được lớn hơn số lượng tồn kho hiện tại (" + totalQuantity + ")");
+//	    } else {
+//	        return ResponseEntity.ok("Số lượng hợp lệ");
+//	    }
+//	}
+
 
 
 	private int calculateTotalQuantity(Product product) {
-		int totalQuantity = 0;
-		List<Inventory> inventories = inventoryService.findByProduct(product);
-		for (Inventory inventory : inventories) {
-			totalQuantity += inventory.getQuantity();
-		}
-		return totalQuantity;
+		 int totalQuantity = 0;
+	        List<Inventory> inventories = inventoryService.findByProduct(product);
+	        for (Inventory inventory : inventories) {
+	            totalQuantity += inventory.getQuantity();
+	        }
+	        List<Inventory_out> inventoryOuts = inventoryOutService.findByProduct(product);
+	        for (Inventory_out inventoryOut : inventoryOuts) {
+	            totalQuantity -= inventoryOut.getQuantity_out();
+	        }
+	        return totalQuantity;
 	}
 
 	@GetMapping("/product")
