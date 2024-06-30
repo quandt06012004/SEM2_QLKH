@@ -1,8 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="admin/fragments/head :: head"></div>
-<title>Admin Dashboard</title>
+    <title>Admin Dashboard</title>
+
+    <div th:replace="admin/fragments/head :: head"></div>
+    <!-- Add custom CSS here -->
+    <style>
+        .chart-container {
+            position: relative;
+            height: 370px; /* Chiều cao cố định cho các biểu đồ */
+        }
+
+        .small-box .icon {
+            top: 10px; /* Điều chỉnh vị trí của icon trong các box nhỏ */
+        }
+
+        .small-box .inner h3 {
+            font-size: 2.2em; /* Điều chỉnh kích thước chữ */
+        }
+
+        .small-box-footer {
+            padding: 10px; /* Điều chỉnh padding của footer trong các box nhỏ */
+        }
+    </style>
+
 
 <body class="hold-transition skin-blue sidebar-mini">
     <!-- Site wrapper -->
@@ -27,7 +48,7 @@
                 <div class="box">
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-lg-4 col-xs-4">
+                            <div class="col-lg-4 col-xs-12">
                                 <!-- Small box for countProduct -->
                                 <div class="small-box bg-aqua">
                                     <div class="inner">
@@ -40,7 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-xs-4">
+                            <div class="col-lg-4 col-xs-12">
                                 <!-- Small box for countCategory -->
                                 <div class="small-box bg-green">
                                     <div class="inner">
@@ -53,7 +74,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-xs-4">
+                            <div class="col-lg-4 col-xs-12">
                                 <!-- Small box for countUser -->
                                 <div class="small-box bg-yellow">
                                     <div class="inner">
@@ -71,11 +92,15 @@
 
                         <!-- Charts -->
                         <div class="row">
-                            <div class="col-lg-6">
-                                <canvas id="barChart"></canvas>
+                            <div class="col-lg-6 col-xs-12">
+                                <div class="chart-container">
+                                    <canvas id="barChart"></canvas>
+                                </div>
                             </div>
-                            <div class="col-lg-6">
-                                <canvas id="pieChart"></canvas>
+                            <div class="col-lg-6 col-xs-12">
+                                <div class="chart-container">
+                                    <canvas id="pieChart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,7 +157,9 @@
                             beginAtZero: true
                         }
                     }]
-                }
+                },
+                responsive: true,
+                maintainAspectRatio: false
             }
         });
 
@@ -159,13 +186,8 @@
                 }]
             },
             options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+                responsive: true,
+                maintainAspectRatio: false
             }
         });
     </script>
