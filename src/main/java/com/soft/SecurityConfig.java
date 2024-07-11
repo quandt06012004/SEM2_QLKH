@@ -27,7 +27,7 @@ public class SecurityConfig {
 				
 				.formLogin(login -> login.loginPage("/login").loginProcessingUrl("/login").usernameParameter("username")
 						.passwordParameter("password").defaultSuccessUrl("/admin/", true))
-				.logout(logout -> logout.logoutUrl("/admin-logout").logoutSuccessUrl("/login"));
+				.logout(logout -> logout.logoutUrl("/admin-logout").logoutSuccessUrl("/login?logout"));
 
 		return http.build();
 	}

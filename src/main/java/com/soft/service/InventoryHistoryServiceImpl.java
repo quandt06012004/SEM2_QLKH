@@ -43,4 +43,29 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
 		// TODO Auto-generated method stub
 		 return inventoryHistoryRepository.findByInventoryOutId(inventoryOutId);
 	}
+
+	@Override
+	public List<InventoryHistory> getAllHistory() {
+		// TODO Auto-generated method stub
+		return this.inventoryHistoryRepository.findAll();
+	}
+
+	@Override
+	public List<InventoryHistory> findByProductName(String productName) {
+		// TODO Auto-generated method stub
+		 return this.inventoryHistoryRepository.findByProductName(productName);
+	}
+
+	@Override
+	public Boolean deleteHistoryById(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			this.inventoryHistoryRepository.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

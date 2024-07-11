@@ -48,7 +48,11 @@
             <span th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"
                   class="help-block">Invalid product name.</span>
         </div>
-
+		<div class="form-group" th:classappend="${#fields.hasErrors('price')} ? 'has-error' : ''">
+            <label for="price">ToTalQuantity :</label>
+            <input type="text" class="form-control" id="totalQuantity" placeholder="totalQuantity" th:field="*{totalQuantity}">
+            <span th:if="${#fields.hasErrors('totalQuantity')}" th:errors="*{totalQuantity}" class="help-block">Invalid price.</span>
+        </div>
         <!-- Price -->
         <div class="form-group" th:classappend="${#fields.hasErrors('price')} ? 'has-error' : ''">
             <label for="price">Price :</label>

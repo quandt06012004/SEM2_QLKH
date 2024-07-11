@@ -16,38 +16,44 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
-@Table(name="Inventories")
+@Table(name = "Inventories")
 public class Inventory {
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Id")
-    private Integer id;
 
-    @Column(name="Quantity")
-    private Integer quantity;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "Id")
+	private Integer id;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name="LastUpdated")
-    private Date lastUpdated;
+	@NotNull(message = "Quantity is required")
+	@PositiveOrZero(message = "Quantity must be a positive number or zero")
+	@Column(name = "Quantity")
+	private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name="product_id", referencedColumnName = "id")
-    private Product product;
+	@NotNull(message = "Last updated date is required")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "LastUpdated")
+	private Date lastUpdated;
+	@ManyToOne
+	@JoinColumn(name = "product_id", referencedColumnName = "id")
+	private Product product;
 
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
 //    , orphanRemoval = true
-    private List<InventoryHistory> history = new ArrayList<>();
+	private List<InventoryHistory> history = new ArrayList<>();
 
-    public Inventory() {
-		// TODO Auto-generated constructor stub
+
+	public Inventory() {
+		// Default constructor
 	}
 
-	public Inventory(Integer id, Integer quantity, Date lastUpdated, Product product, List<InventoryHistory> history) {
+	public Inventory(Integer id,
+			@NotNull(message = "Quantity is required") @PositiveOrZero(message = "Quantity must be a positive number or zero") Integer quantity,
+			@NotNull(message = "Last updated date is required") Date lastUpdated, Product product,
+			List<InventoryHistory> history) {
 		super();
 		this.id = id;
 		this.quantity = quantity;
@@ -95,5 +101,4 @@ public class Inventory {
 	public void setHistory(List<InventoryHistory> history) {
 		this.history = history;
 	}
-    
 }

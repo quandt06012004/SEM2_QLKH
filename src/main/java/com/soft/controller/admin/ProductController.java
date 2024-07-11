@@ -191,7 +191,7 @@ public class ProductController {
 
 
 	private int calculateTotalQuantity(Product product) {
-		 int totalQuantity = 0;
+		 int totalQuantity = product.getTotalQuantity();
 	        List<Inventory> inventories = inventoryService.findByProduct(product);
 	        for (Inventory inventory : inventories) {
 	            totalQuantity += inventory.getQuantity();
@@ -348,6 +348,10 @@ public class ProductController {
 		if (this.productService.update(product)) {
 			return "redirect:/admin/product";
 		} else {
+			List<Category> listCate = this.categoryService.getAll();
+			model.addAttribute("listCate", listCate);
+			List<Suppliers> listSupp = this.supplierService.getAll();
+			model.addAttribute("listSupp", listSupp);
 			model.addAttribute("error", "Failed to update product");
 			model.addAttribute("product", product);
 			return "admin/product/edit";

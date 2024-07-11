@@ -7,6 +7,9 @@ import com.soft.models.InventoryHistory;
 import com.soft.models.Inventory_out;
 
 public interface InventoryHistoryService {
+	List<InventoryHistory> getAllHistory();
+	 List<InventoryHistory> findByProductName(String productName);
+	 public Boolean deleteHistoryById(Integer id);
 	 List<InventoryHistory> findByInventoryId(Integer inventoryId);
 	 List<InventoryHistory> findByInventoryOutId(Integer inventoryId);
 	    void create(InventoryHistory history);
