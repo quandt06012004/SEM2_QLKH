@@ -75,7 +75,7 @@ public class AdminController {
 	        return "admin/index";
 	    }
 
-	    @PreAuthorize("hasRole('admin')")
+//	    @PreAuthorize("hasRole('admin')")
 	    @GetMapping("/account/management")
 	    public String accountManagement(Model model, @RequestParam(name="keyword",defaultValue = "") String keyword,
 				@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
@@ -94,7 +94,7 @@ public class AdminController {
 	    }
 	    
 	   
-	    @PreAuthorize("hasRole('admin')")
+//	    @PreAuthorize("hasRole('admin')")
 	    @GetMapping("/account/profile")
 	    public String getProfile(Model model, Principal principal) {
 	        String userName = principal.getName();
@@ -108,13 +108,13 @@ public class AdminController {
 	        return "admin/account/profile";
 	    }
 	    
-	    @PreAuthorize("hasRole('admin')")
+//	    @PreAuthorize("hasRole('admin')")
 	    @GetMapping("/account/change-password")
 	    public String showChangePasswordPage() {
 	        return "admin/account/change-password";
 	    }
 	    
-	    @PreAuthorize("hasRole('admin')")
+//	    @PreAuthorize("hasRole('admin')")
 	    @PostMapping("/account/change-password")
 	    public String changePassword(
 	            @RequestParam("currentPassword") String currentPassword,
